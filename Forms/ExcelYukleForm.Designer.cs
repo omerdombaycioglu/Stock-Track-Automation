@@ -27,21 +27,17 @@
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            this.SuspendLayout();
 
-            // 
             // txtDosyaYolu
-            // 
             this.txtDosyaYolu.Location = new System.Drawing.Point(16, 15);
             this.txtDosyaYolu.Margin = new System.Windows.Forms.Padding(4);
             this.txtDosyaYolu.Name = "txtDosyaYolu";
             this.txtDosyaYolu.ReadOnly = true;
             this.txtDosyaYolu.Size = new System.Drawing.Size(532, 22);
             this.txtDosyaYolu.TabIndex = 0;
-            // 
+
             // btnDosyaSec
-            // 
             this.btnDosyaSec.Location = new System.Drawing.Point(557, 12);
             this.btnDosyaSec.Margin = new System.Windows.Forms.Padding(4);
             this.btnDosyaSec.Name = "btnDosyaSec";
@@ -50,9 +46,8 @@
             this.btnDosyaSec.Text = "Dosya Seç";
             this.btnDosyaSec.UseVisualStyleBackColor = true;
             this.btnDosyaSec.Click += new System.EventHandler(this.btnDosyaSec_Click);
-            // 
+
             // dataGridViewExcel
-            // 
             this.dataGridViewExcel.AllowUserToAddRows = false;
             this.dataGridViewExcel.AllowUserToDeleteRows = false;
             this.dataGridViewExcel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -63,9 +58,8 @@
             this.dataGridViewExcel.RowHeadersWidth = 51;
             this.dataGridViewExcel.Size = new System.Drawing.Size(880, 369);
             this.dataGridViewExcel.TabIndex = 2;
-            // 
+
             // groupBox1
-            // 
             this.groupBox1.Controls.Add(this.radioSil);
             this.groupBox1.Controls.Add(this.radioEkle);
             this.groupBox1.Location = new System.Drawing.Point(16, 423);
@@ -76,9 +70,8 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "İşlem Türü";
-            // 
+
             // radioSil
-            // 
             this.radioSil.AutoSize = true;
             this.radioSil.Location = new System.Drawing.Point(200, 25);
             this.radioSil.Margin = new System.Windows.Forms.Padding(4);
@@ -87,9 +80,8 @@
             this.radioSil.TabIndex = 1;
             this.radioSil.Text = "İlgili ürünleri depodan sil";
             this.radioSil.UseVisualStyleBackColor = true;
-            // 
+
             // radioEkle
-            // 
             this.radioEkle.AutoSize = true;
             this.radioEkle.Checked = true;
             this.radioEkle.Location = new System.Drawing.Point(13, 25);
@@ -100,9 +92,8 @@
             this.radioEkle.TabStop = true;
             this.radioEkle.Text = "İlgili ürünleri depoya ekle";
             this.radioEkle.UseVisualStyleBackColor = true;
-            // 
+
             // btnIslemYap
-            // 
             this.btnIslemYap.Location = new System.Drawing.Point(440, 431);
             this.btnIslemYap.Margin = new System.Windows.Forms.Padding(4);
             this.btnIslemYap.Name = "btnIslemYap";
@@ -111,27 +102,24 @@
             this.btnIslemYap.Text = "İşlemi Gerçekleştir";
             this.btnIslemYap.UseVisualStyleBackColor = true;
             this.btnIslemYap.Click += new System.EventHandler(this.btnIslemYap_Click);
-            // 
+
             // lblKayitSayisi
-            // 
             this.lblKayitSayisi.AutoSize = true;
             this.lblKayitSayisi.Location = new System.Drawing.Point(667, 431);
             this.lblKayitSayisi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblKayitSayisi.Name = "lblKayitSayisi";
             this.lblKayitSayisi.Size = new System.Drawing.Size(0, 16);
             this.lblKayitSayisi.TabIndex = 5;
-            // 
+
             // txtAciklama
-            // 
             this.txtAciklama.Location = new System.Drawing.Point(16, 493);
             this.txtAciklama.Margin = new System.Windows.Forms.Padding(4);
             this.txtAciklama.Multiline = true;
             this.txtAciklama.Name = "txtAciklama";
             this.txtAciklama.Size = new System.Drawing.Size(880, 60);
             this.txtAciklama.TabIndex = 6;
-            // 
+
             // label1
-            // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(16, 473);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -139,9 +127,8 @@
             this.label1.Size = new System.Drawing.Size(119, 16);
             this.label1.TabIndex = 7;
             this.label1.Text = "Silme Açıklaması:";
-            // 
+
             // ExcelYukleForm
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 570);
@@ -165,7 +152,6 @@
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.TextBox txtDosyaYolu;

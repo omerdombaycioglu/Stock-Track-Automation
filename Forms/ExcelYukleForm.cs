@@ -310,24 +310,13 @@ namespace DepoTakip.Forms
                 return;
             }
 
-            if (miktar == mevcutMiktar)
+            // Güncelleme işlemi (artık hiçbir durumda silme yapmıyoruz)
+            string updateQuery = "UPDATE urunler SET miktar = GREATEST(0, miktar - @miktar) WHERE id = @urunId";
+            using (var updateCmd = new MySqlCommand(updateQuery, connection))
             {
-                string deleteQuery = "DELETE FROM urunler WHERE id = @urunId";
-                using (var deleteCmd = new MySqlCommand(deleteQuery, connection))
-                {
-                    deleteCmd.Parameters.AddWithValue("@urunId", urunId);
-                    deleteCmd.ExecuteNonQuery();
-                }
-            }
-            else
-            {
-                string updateQuery = "UPDATE urunler SET miktar = miktar - @miktar WHERE id = @urunId";
-                using (var updateCmd = new MySqlCommand(updateQuery, connection))
-                {
-                    updateCmd.Parameters.AddWithValue("@miktar", miktar);
-                    updateCmd.Parameters.AddWithValue("@urunId", urunId);
-                    updateCmd.ExecuteNonQuery();
-                }
+                updateCmd.Parameters.AddWithValue("@miktar", miktar);
+                updateCmd.Parameters.AddWithValue("@urunId", urunId);
+                updateCmd.ExecuteNonQuery();
             }
 
             SaveHistory(connection, urunId, "silme", miktar, aciklama);

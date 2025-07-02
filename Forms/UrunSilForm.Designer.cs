@@ -51,7 +51,7 @@
             this.btnSil.Name = "btnSil";
             this.btnSil.Size = new System.Drawing.Size(211, 28);
             this.btnSil.TabIndex = 4;
-            this.btnSil.Text = "Ürünü Sil";
+            this.btnSil.Text = "Ürün Miktarını Azalt";
             this.btnSil.UseVisualStyleBackColor = true;
             this.btnSil.Click += new System.EventHandler(this.btnSil_Click);
 
@@ -92,7 +92,7 @@
             this.MinimizeBox = false;
             this.Name = "UrunSilForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Ürün Silme";
+            this.Text = "Ürün Miktarını Azalt";
             this.ResumeLayout(false);
             this.PerformLayout();
         }

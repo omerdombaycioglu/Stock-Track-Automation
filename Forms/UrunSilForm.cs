@@ -24,7 +24,7 @@ namespace DepoTakip.Forms
                 using (var connection = DatabaseHelper.GetConnection())
                 {
                     connection.Open();
-                    string query = "SELECT urun_numarasi FROM urunler";
+                    string query = "SELECT urun_numarasi FROM urunler WHERE miktar > 0"; // Sadece miktarı >0 olan ürünleri getir
 
                     var urunNumaralari = new List<string>();
                     using (var cmd = new MySqlCommand(query, connection))
@@ -109,28 +109,16 @@ namespace DepoTakip.Forms
                         return;
                     }
 
-                    // Ürünü sil veya güncelle
-                    if (silinecekMiktar == mevcutMiktar)
+                    // Ürün miktarını güncelle (artık hiçbir durumda silme yapmıyoruz)
+                    string updateQuery = "UPDATE urunler SET miktar = GREATEST(0, miktar - @miktar) WHERE id = @urunId";
+                    using (var updateCmd = new MySqlCommand(updateQuery, connection))
                     {
-                        string deleteQuery = "DELETE FROM urunler WHERE id = @urunId";
-                        using (var deleteCmd = new MySqlCommand(deleteQuery, connection))
-                        {
-                            deleteCmd.Parameters.AddWithValue("@urunId", urunId);
-                            deleteCmd.ExecuteNonQuery();
-                        }
-                    }
-                    else
-                    {
-                        string updateQuery = "UPDATE urunler SET miktar = miktar - @miktar WHERE id = @urunId";
-                        using (var updateCmd = new MySqlCommand(updateQuery, connection))
-                        {
-                            updateCmd.Parameters.AddWithValue("@miktar", silinecekMiktar);
-                            updateCmd.Parameters.AddWithValue("@urunId", urunId);
-                            updateCmd.ExecuteNonQuery();
-                        }
+                        updateCmd.Parameters.AddWithValue("@miktar", silinecekMiktar);
+                        updateCmd.Parameters.AddWithValue("@urunId", urunId);
+                        updateCmd.ExecuteNonQuery();
                     }
 
-                    // İşlem geçmişine ekle (yeni aciklama alanı ile)
+                    // İşlem geçmişine ekle
                     string historyQuery = @"INSERT INTO islem_gecmisi 
                                         (urun_id, islem_tipi, miktar, aciklama, kullanici_id)
                                         VALUES (@urunId, 'silme', @miktar, @aciklama, @userId)";
@@ -144,7 +132,7 @@ namespace DepoTakip.Forms
                         historyCmd.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show("Ürün başarıyla silindi/güncellendi!");
+                    MessageBox.Show("Ürün miktarı başarıyla güncellendi!");
                     this.Close();
                 }
             }
