@@ -149,7 +149,6 @@ namespace DepoTakip.Forms
         private void IslemGecmisiForm_Load(object sender, EventArgs e)
         {
             // Form yüklendiğinde ek ayarlar
-            this.WindowState = FormWindowState.Maximized;
         }
     }
 }
