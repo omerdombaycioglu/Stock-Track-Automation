@@ -9,60 +9,43 @@ namespace DepoTakip.Forms
     {
         private int projeId;
 
-        public ProjeDetayForm(int id)
+        public ProjeDetayForm(int projeId)
         {
             InitializeComponent();
-            projeId = id;
+            this.projeId = projeId;
+            this.Text = $"Proje Detayları (ID: {projeId})";
             ProjeDetaylariniYukle();
-            ProjeUrunleriniYukle();
         }
 
         private void ProjeDetaylariniYukle()
         {
             string connectionString = "Server=localhost;Database=depo_takip;Uid=root;Pwd=;";
-            string query = @"SELECT p.proje_adi, p.proje_kodu, p.olusturma_tarihi, k.ad_soyad 
-                            FROM projeler p 
-                            JOIN kullanicilar k ON p.proje_yetkilisi_id = k.id 
-                            WHERE p.id = @proje_id";
+            string query = @"SELECT 
+                            pu.id, 
+                            u.urun_numarasi, 
+                            u.tip_numarasi,
+                            u.aciklama,
+                            u.uretici,
+                            pu.miktar AS projedeki_miktar,
+                            u.miktar AS stoktaki_miktar,
+                            CASE 
+                                WHEN u.miktar >= pu.miktar THEN 'Stokta Var'
+                                ELSE 'Stokta Yok'
+                            END AS durum
+                        FROM proje_urunleri pu
+                        JOIN urunler u ON pu.urun_id = u.id
+                        WHERE pu.proje_id = @projeId";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@proje_id", projeId);
-                    connection.Open();
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            lblProjeAdi.Text = reader["proje_adi"].ToString();
-                            lblProjeKodu.Text = reader["proje_kodu"].ToString();
-                            lblYetkili.Text = reader["ad_soyad"].ToString();
-                            lblTarih.Text = Convert.ToDateTime(reader["olusturma_tarihi"]).ToString("dd.MM.yyyy HH:mm");
-                        }
-                    }
-                }
-            }
-        }
-
-        private void ProjeUrunleriniYukle()
-        {
-            string connectionString = "Server=localhost;Database=depo_takip;Uid=root;Pwd=;";
-            string query = @"SELECT u.urun_numarasi, u.aciklama, pu.miktar 
-                            FROM proje_urunleri pu 
-                            JOIN urunler u ON pu.urun_id = u.id 
-                            WHERE pu.proje_id = @proje_id";
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@proje_id", projeId);
+                    command.Parameters.AddWithValue("@projeId", projeId);
                     MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                     DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
 
-                    dataGridViewUrunler.DataSource = dataTable;
+                    dataGridViewDetay.DataSource = dataTable;
                 }
             }
         }

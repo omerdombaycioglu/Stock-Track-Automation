@@ -19,7 +19,11 @@ namespace DepoTakip.Forms
         private void ProjeleriYukle()
         {
             string connectionString = "Server=localhost;Database=depo_takip;Uid=root;Pwd=;";
-            string query = "SELECT id, proje_adi, proje_kodu, olusturma_tarihi FROM projeler WHERE proje_yetkilisi_id = @yetkili_id ORDER BY olusturma_tarihi DESC";
+            string query = @"SELECT p.id, p.proje_adi, p.proje_kodu, p.olusturma_tarihi, 
+                           (SELECT COUNT(*) FROM proje_urunleri pu WHERE pu.proje_id = p.id) AS urun_sayisi
+                           FROM projeler p 
+                           WHERE p.proje_yetkilisi_id = @yetkili_id 
+                           ORDER BY p.olusturma_tarihi DESC";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
