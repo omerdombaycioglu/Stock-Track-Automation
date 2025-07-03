@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -46,6 +47,32 @@ namespace DepoTakip.Forms
                     adapter.Fill(dataTable);
 
                     dataGridViewDetay.DataSource = dataTable;
+
+                    // Hücre biçimlendirme olayını ekleyin
+                    dataGridViewDetay.CellFormatting += DataGridViewDetay_CellFormatting;
+                }
+            }
+        }
+
+        private void DataGridViewDetay_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Sadece satır hücrelerini işle (başlık satırlarını değil)
+            if (e.RowIndex >= 0 && dataGridViewDetay.Columns[e.ColumnIndex].Name == "durum")
+            {
+                // Durum sütunundaki değeri al
+                string durum = dataGridViewDetay.Rows[e.RowIndex].Cells["durum"].Value.ToString();
+
+                if (durum == "Stokta Yok")
+                {
+                    // Arka plan rengini kırmızı yap
+                    e.CellStyle.BackColor = Color.LightCoral;
+                    e.CellStyle.ForeColor = Color.DarkRed;
+                }
+                else
+                {
+                    // Arka plan rengini yeşil yap
+                    e.CellStyle.BackColor = Color.LightGreen;
+                    e.CellStyle.ForeColor = Color.DarkGreen;
                 }
             }
         }
